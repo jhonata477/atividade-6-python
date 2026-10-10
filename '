@@ -1,0 +1,67 @@
+
+from abc import ABC, abstractmethod
+
+
+# 1. Classe abstrata
+class Conta(ABC):
+
+    def __init__(self, titular, saldo):
+        self.titular = titular
+        self.saldo = saldo
+
+    @abstractmethod
+    def calcular_rendimento(self):
+        pass
+
+    def __str__(self):
+        return (
+            f"Titular: {self.titular} | "
+            f"Saldo: R$ {self.saldo:.2f}"
+        )
+
+
+# 2. Conta corrente
+class ContaCorrente(Conta):
+
+    def __init__(self, titular, saldo, limite):
+        super().__init__(titular, saldo)
+        self.limite = limite
+
+    def calcular_rendimento(self):
+        return 0
+
+    def __str__(self):
+        return (
+            f"Conta Corrente | Titular: {self.titular} | "
+            f"Saldo: R$ {self.saldo:.2f} | "
+            f"Limite: R$ {self.limite:.2f}"
+        )
+
+
+# 3. Conta poupança
+class ContaPoupanca(Conta):
+
+    def __init__(self, titular, saldo, taxa_rendimento):
+        super().__init__(titular, saldo)
+        self.taxa_rendimento = taxa_rendimento
+
+    def calcular_rendimento(self):
+        return self.saldo * self.taxa_rendimento / 100
+
+    def __str__(self):
+        return (
+            f"Conta Poupança | Titular: {self.titular} | "
+            f"Saldo: R$ {self.saldo:.2f} | "
+            f"Rendimento: R$ {self.calcular_rendimento():.2f}"
+        )
+
+
+# 4. Classe para representar o cliente
+class Cliente:
+
+    def __init__(self, nome, cpf):
+        self.nome = nome
+        self.cpf = cpf
+
+    def __str__(self):
+        return f"Cliente: {self.nome} | CPF: {self.cpf}"
